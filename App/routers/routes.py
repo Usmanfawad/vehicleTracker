@@ -4,6 +4,7 @@ import httpx
 from App.schemas.schema import Location
 from App.services.utils.lat_long_parser import extract_coordinates
 from App.routers.constants import *
+from App.db.session import get_db
 
 from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form
 from typing import Optional
@@ -60,11 +61,17 @@ async def get_distance_all():
 
 
 @router.post("/postLocation")
-async def post_location(location_obj: Location):
+async def post_location(
+        lat: float,
+        longitude: float,
+        time: str,
+        id: str
+    ):
     '''
     GPS Logger Listener
     :param locationObj:
     :return: BOOL
     '''
-    print(location_obj)
+    print({"lat": lat, "lon": longitude, "time": time, "id": id})
+    FAKE_DB[id] = [lat,longitude]
     return {"200", "Success"}

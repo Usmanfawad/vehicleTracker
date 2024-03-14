@@ -2,14 +2,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from App.routers.routes import router as main_route
+from App.db.session import Base, engine
 
+from sqlalchemy.orm import Session
 
 ###
 # Main application file
 ###
 
-# def create_tables():
-# 	Base.metadata.create_all(bind=engine)
+def create_tables():
+	Base.metadata.create_all(bind=engine)
 
 
 
@@ -30,7 +32,7 @@ def get_application() -> FastAPI:
 
 
     # Creating all database tables
-    # create_tables()
+    create_tables()
 
 
     ## Mapping api routes
