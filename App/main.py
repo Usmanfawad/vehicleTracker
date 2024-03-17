@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from App.routers.routes import router as main_route
-from App.db.session import Base, engine
+from App.db.session import engine
+from App.db.base import Base
 
 from sqlalchemy.orm import Session
 
@@ -12,7 +13,6 @@ from sqlalchemy.orm import Session
 
 def create_tables():
 	Base.metadata.create_all(bind=engine)
-
 
 
 def get_application() -> FastAPI:

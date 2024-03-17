@@ -1,8 +1,8 @@
-"""init db
+"""Added bus model with bus_id
 
-Revision ID: c336b3a902d8
+Revision ID: 3f2a86923ebc
 Revises: 
-Create Date: 2024-03-15 03:09:58.993013
+Create Date: 2024-03-16 21:22:14.115077
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'c336b3a902d8'
+revision: str = '3f2a86923ebc'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
