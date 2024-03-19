@@ -2,14 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers.routes import router as main_route
+from app.routers.routes import lifespan
 from app.db.session import engine
 from app.db.base import Base
 
 from sqlalchemy.orm import Session
 
-###
-# Main application file
-###
+
+
 def create_tables():
 	Base.metadata.create_all(bind=engine)
 
@@ -26,13 +26,12 @@ def get_application() -> FastAPI:
         contact={
             "name": "Usman Fawad",
             "email": "ufawad0@gmail.com",
-        },
+        }
     )
     # Creating all database tables
     create_tables()
     ## Mapping api routes
     application.include_router(main_route, prefix="/app")
-    print("Returning main app..")
 
     ## Allow cors
     application.add_middleware(
@@ -42,6 +41,7 @@ def get_application() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
     return application
 
 

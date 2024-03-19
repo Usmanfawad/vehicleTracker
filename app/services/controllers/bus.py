@@ -32,7 +32,7 @@ def add_or_update_bus(id: int, lat: float, lon: float, time: str, db: Session):
 
 
 def get_all_buses(db: Session):
-    buses = db.query(Bus).all()  # Query all buses from the database
+    buses = db.query(Bus).all()  # Query all busses from the database
     bus_dict = {}
     for bus in buses:
         bus_dict[str(bus.bus_id)] = [bus.lat, bus.lon]

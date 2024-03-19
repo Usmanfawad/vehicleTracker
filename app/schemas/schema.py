@@ -10,4 +10,4 @@ class Location(BaseModel):
     # ?lat=%LAT&longitude=%LON&time=%TIME&id=%AID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
