@@ -1,19 +1,21 @@
 import httpx
 from typing import Optional
 
+
 from sqlalchemy.orm import Session
 
 
+from app.schemas.schema import Location
+from app.services.utils.lat_long_parser import extract_coordinates
+from app.routers.constants import *
+from app.db.session import get_db
+from app.services.controllers.bus import add_or_update_bus, get_all_buses
 
-from App.schemas.schema import Location
-from App.services.utils.lat_long_parser import extract_coordinates
-from App.routers.constants import *
-from App.db.session import get_db
-from App.services.controllers.bus import add_or_update_bus, get_all_buses
+
+from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form, FastAPI
 
 
-from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form
-from fastapi import Depends
+from contextlib import asynccontextmanager
 
 
 
@@ -24,6 +26,13 @@ router = APIRouter(
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
+
+
+@asynccontextmanager
+async def get_locations(app: FastAPI):
+    pass
+
+
 
 
 @router.get("/")

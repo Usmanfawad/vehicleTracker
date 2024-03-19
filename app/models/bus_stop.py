@@ -2,7 +2,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float
 from sqlalchemy.orm import relationship
 
 
-from App.db.base_class import Base
+from app.db.base_class import Base
 
 class BusStop(Base):
 

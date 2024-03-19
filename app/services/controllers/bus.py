@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from App.db.session import get_db
-from App.models.bus import Bus
+from app.db.session import get_db
+from app.models.bus import Bus
 
 
 
