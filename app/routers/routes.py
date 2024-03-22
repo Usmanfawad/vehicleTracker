@@ -11,7 +11,7 @@ from app.services.utils.lat_long_parser import extract_coordinates
 from app.routers.constants import *
 from app.db.session import get_db
 from app.services.controllers.bus import add_or_update_bus, get_all_buses
-from app.routers.helpers.helpers import parse_distance_matrix_result
+from app.routers.helpers import parse_distance_matrix_result
 
 
 from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form, FastAPI
