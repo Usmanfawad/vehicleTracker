@@ -50,7 +50,7 @@ async def lifespan():
 
         # Construct the desired structure
         BUS_LOCATIONS_PARSED = {"locationStops": location_stops}
-
+        print(BUS_LOCATIONS_PARSED)
         print("...Application startup complete...")
 
     except Exception as e:

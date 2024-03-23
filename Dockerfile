@@ -11,5 +11,6 @@ ENV PYTHONUNBUFFERED True
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . .
+EXPOSE 8000
 
-CMD exec uvicorn app.main:app --workers 4 --port 8080 --host 0.0.0.0
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
