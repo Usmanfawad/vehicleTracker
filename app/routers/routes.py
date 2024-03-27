@@ -77,7 +77,7 @@ async def get_distance_all(db: Session = Depends(get_db)):
     :return: Distance matrix API response
     '''
     api_responses_lst = []
-    base_url = "https://api.distancematrix.ai/maps/api/distancematrix/json"
+    BASE_URL = "https://api.distancematrix.ai/maps/api/distancematrix/json"
     # DB Get all
     stops = BUS_LOCATIONS_PARSED["locationStops"]
     bus_objects = get_all_buses(db=db)
@@ -93,7 +93,7 @@ async def get_distance_all(db: Session = Depends(get_db)):
                     "key": API_KEY
                 }
                 async with httpx.AsyncClient() as client:
-                    response = await client.get(base_url, params=params)
+                    response = await client.get(BASE_URL, params=params)
                 if response.status_code == 200:
                     data = response.json()
                     parsed_result = parse_distance_matrix_result(data)
@@ -102,7 +102,9 @@ async def get_distance_all(db: Session = Depends(get_db)):
                     raise HTTPException(status_code=response.status_code, detail="No response from Distance Matrix Server")
         api_responses_lst.append(api_responses)
 
-    return {"data" : api_responses_lst}
+        sorted_data = sorted(api_responses_lst[0]["distances"], key=lambda x: x["in_m"])
+
+    return {"data" : sorted_data}
 
 
 @router.post("/postLocation")
@@ -110,7 +112,7 @@ async def post_location(
         lat: float,
         longitude: float,
         time: str,
-        id: str,
+        bus_id: str,
         db: Session = Depends(get_db)
     ):
     '''
