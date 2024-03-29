@@ -58,7 +58,7 @@ async def lifespan():
 
 
 
-@router.get("/main")
+@router.get("/bus_stops")
 async def main():
     '''
     Test route
@@ -70,7 +70,7 @@ async def main():
 
 
 
-@router.get("/getDistance/all", status_code=status.HTTP_200_OK)
+@router.get("/distance/all", status_code=status.HTTP_200_OK)
 async def get_distance_all(db: Session = Depends(get_db)):
     '''
     Returns distances of all busses from all the stops
@@ -107,8 +107,8 @@ async def get_distance_all(db: Session = Depends(get_db)):
     return {"data" : sorted_data}
 
 
-@router.post("/postLocation")
-async def post_location(
+@router.post("/bus_stop")
+async def bus_stop(
         lat: float,
         longitude: float,
         time: str,
@@ -116,7 +116,7 @@ async def post_location(
         db: Session = Depends(get_db)
     ):
     '''
-    GPS Logger Listener
+    GPS Logger Listener. Adds or updates location in DB
     :param locationObj:
     :return: BOOL
     '''
