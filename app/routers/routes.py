@@ -14,7 +14,7 @@ from app.services.controllers.bus import add_or_update_bus, get_all_buses
 from app.routers.helpers import parse_distance_matrix_result
 
 
-from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form, FastAPI
+from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form, FastAPI, Query
 
 
 from contextlib import asynccontextmanager
@@ -109,16 +109,20 @@ async def get_distance_all(db: Session = Depends(get_db)):
 
 @router.post("/bus_stop")
 async def bus_stop(
-        lat: float,
-        longitude: float,
-        time: str,
-        bus_id: str,
+        lat: float = Query(..., description="Latitude of the location", example="47.8807676"),
+        longitude: float = Query(..., description="Longitude of the location", example="10.0403246"),
+        time: str = Query(..., description="The time the location was posted in ISO 8601 format", example="2024-03-25T11:48:37.136Z"),
+        id: str = Query(..., description="A unique identifier for the bus. Basically the GPS logger bus ID", example="7143c08dd569876e"),
         db: Session = Depends(get_db)
     ):
-    '''
-    GPS Logger Listener. Adds or updates location in DB
-    :param locationObj:
-    :return: BOOL
-    '''
+    print(lat)
+    """
+    GPS Logger Listener. Adds or updates location in DB.
+
+    - **lat**: Latitude of the bus stop.
+    - **longitude**: Longitude of the bus stop.
+    - **time**: The time the bus stop was recorded. Expected format: ISO 8601. example="2024-03-25T11:48:37.136Z"
+    - **bus_id**: A unique identifier for the bus.
+    """
     bus = add_or_update_bus(id, lat, longitude, time, db=db)
     return {"200", "Success"}
