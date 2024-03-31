@@ -124,5 +124,6 @@ async def bus_stop(
     - **time**: The time the bus stop was recorded. Expected format: ISO 8601. example="2024-03-25T11:48:37.136Z"
     - **bus_id**: A unique identifier for the bus.
     """
+
     bus = add_or_update_bus(id, lat, longitude, time, db=db)
     return {"200", "Success"}
