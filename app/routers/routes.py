@@ -140,8 +140,8 @@ async def get_distance_all(db: Session = Depends(get_db)):
         else:
             raise HTTPException(status_code=response.status_code, detail="No response from Distance Matrix Server")
         # Sort distances for this bus
-        sorted_distances = sorted(distances[0], key=lambda x: x['in_m'])
-        return {"bus_id": bus_id, "distances": sorted_distances}
+        # sorted_distances = sorted(distances[0], key=lambda x: x['in_m'])
+        return {"bus_id": bus_id, "distances": distances[0]}
 
     tasks = [fetch_distances(bus_id, bus_coords, stops) for bus_id, bus_coords in bus_objects.items()]
     api_responses_lst = await asyncio.gather(*tasks)
