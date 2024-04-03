@@ -1,6 +1,6 @@
-from fastapi import FastAPI, Query
-from pydantic import BaseModel, Field
-from typing import Optional
+from fastapi import Query
+from pydantic import BaseModel
+
 
 class Location(BaseModel):
     lat: float = Query(..., description="Latitude of the location", example="47.8807676")

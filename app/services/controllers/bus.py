@@ -1,9 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from app.db.session import get_db
 from app.models.bus import Bus
-
 
 
 def add_or_update_bus(id: int, lat: float, lon: float, time: str, db: Session):

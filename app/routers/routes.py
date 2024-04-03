@@ -1,26 +1,18 @@
 import httpx
-from typing import Optional
 import os
 import json
 import asyncio
 
 from sqlalchemy.orm import Session
 
-
-from app.schemas.schema import Location
 from app.services.utils.lat_long_parser import extract_coordinates
 from app.routers.constants import *
 from app.db.session import get_db
 from app.services.controllers.bus import add_or_update_bus, get_all_buses
-from app.routers.helpers import parse_distance_matrix_result, parse_distance_matrices
+from app.routers.helpers import parse_distance_matrices
 
 
-from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body, Form, FastAPI, Query
-
-
-from contextlib import asynccontextmanager
-
-
+from fastapi import APIRouter, HTTPException, Depends, status, Query
 
 
 router = APIRouter(
@@ -55,7 +47,6 @@ async def lifespan():
 
     except Exception as e:
         print(e)
-
 
 
 @router.get("/bus_stops")

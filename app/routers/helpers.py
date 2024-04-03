@@ -35,7 +35,7 @@ def parse_distance_matrices(response):
                 "in_s": data_response[each_resp]["duration"]["value"],
             }
             lst_all_busses.append(dict_to_append)
-        except Exception as e:
+        except Exception:
             dict_to_append = {
                 "destination": {
                     "name": destination_addresses[each_resp],

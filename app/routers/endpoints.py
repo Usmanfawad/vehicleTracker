@@ -1,5 +1,4 @@
-from fastapi import APIRouter, status, Response, HTTPException, Depends, status, Body
-
+from fastapi import APIRouter
 
 
 router = APIRouter(
@@ -8,6 +7,7 @@ router = APIRouter(
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
+
 
 @router.get("/home")
 async def home():
