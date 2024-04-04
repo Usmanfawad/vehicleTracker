@@ -85,11 +85,13 @@ async def get_distance_all(db: Session = Depends(get_db)):
 
         async with httpx.AsyncClient() as client:
             response = await client.get(BASE_URL, params=params)
-        if response.status_code == 200:
+            print(response.json())
+        if response.json()["status"] != "REQUEST_DENIED":
+            print("Request not denied")
             data = response.json()
             distances.append(parse_distance_matrices(data))
         else:
-            raise HTTPException(status_code=response.status_code, detail="No response from Distance Matrix Server")
+            raise HTTPException(status_code=500, detail=response.json())
         # Sort distances for this bus
         # sorted_distances = sorted(distances[0], key=lambda x: x['in_m'])
         return {"bus_id": bus_id, "distances": distances[0]}

@@ -16,7 +16,6 @@ def parse_distance_matrix_result(response):
 
 def parse_distance_matrices(response):
     lst_all_busses = []
-    print(response)
     destination_addresses = response["destination_addresses"]
     origin_address = response["origin_addresses"][0]  # 0 because there will always be 1 origin per request
     data_response = response["rows"][0]["elements"]
