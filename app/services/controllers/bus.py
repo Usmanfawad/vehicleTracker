@@ -23,6 +23,8 @@ def add_or_update_bus(id: int, lat: float, lon: float, time: str, db: Session):
 
         db.commit()
         return bus
+
+    
     except IntegrityError as e:
         db.rollback()
         print(f"Failed to add or update the bus due to an integrity error: {e}")

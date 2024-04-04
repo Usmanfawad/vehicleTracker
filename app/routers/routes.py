@@ -59,46 +59,6 @@ async def main():
         return {"error": "Application is not fully initialized yet."}
     return {"200": "Success", "data": BUS_LOCATIONS_PARSED}
 
-
-
-# @router.get("/distance/all", status_code=status.HTTP_200_OK)
-# async def get_distance_all(db: Session = Depends(get_db)):
-#     '''
-#     Returns distances of all busses from all the stops
-#     :return: Distance matrix API response
-#     '''
-#     api_responses_lst = []
-#     BASE_URL = "https://api.distancematrix.ai/maps/api/distancematrix/json"
-#     # DB Get all
-#     stops = BUS_LOCATIONS_PARSED["locationStops"]
-#     bus_objects = get_all_buses(db=db)
-#     for bus_id, bus_coordinates in bus_objects.items():
-#         api_responses = {}
-#         api_responses["bus_id"] = bus_id
-#         api_responses["distances"] = []
-#         for each_stop in stops:
-#             for stop, coordinates in each_stop.items():
-#                 params = {
-#                     "origins": ",".join(map(str, bus_coordinates)),
-#                     "destinations": ",".join(map(str, coordinates)),
-#                     "key": API_KEY
-#                 }
-#                 print(params)
-#                 async with httpx.AsyncClient() as client:
-#                     response = await client.get(BASE_URL, params=params)
-#                 if response.status_code == 200:
-#                     data = response.json()
-#                     parsed_result = parse_distance_matrix_result(data)
-#                     api_responses["distances"].append(parsed_result)
-#                 else:
-#                     raise HTTPException(status_code=response.status_code, detail="No response from Distance Matrix Server")
-#
-#         api_responses_lst.append(api_responses)
-#         sorted_data = sorted(api_responses_lst[0]["distances"], key=lambda x: x["in_m"])
-#
-#     return {"data" : sorted_data}
-
-
 @router.get("/distance/all", status_code=status.HTTP_200_OK)
 async def get_distance_all(db: Session = Depends(get_db)):
     '''
@@ -139,7 +99,7 @@ async def get_distance_all(db: Session = Depends(get_db)):
     return {"data": api_responses_lst}
 
 
-@router.post("/bus_stop")
+@router.post("/bus_stop", status_code=status.HTTP_201_CREATED)
 async def bus_stop(
         lat: float = Query(..., description="Latitude of the location", example="47.8807676"),
         longitude: float = Query(..., description="Longitude of the location", example="10.0403246"),
@@ -157,4 +117,7 @@ async def bus_stop(
     '''
 
     bus = add_or_update_bus(id, lat, longitude, time, db=db)
-    return {"200", "Success"}
+    if bus:
+        return bus
+
+    return {"Error" : "Unable to add or update bus "}
