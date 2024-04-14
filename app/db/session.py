@@ -1,10 +1,21 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+DATABASE_CA_CERT = os.getenv("CA_CERT_PATH")
+if DATABASE_CA_CERT is None:
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+    engine = create_engine("sqlite:///./sql_app.db", connect_args={"check_same_thread": False})
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    engine = create_engine(DATABASE_URL, connect_args={
+        "ssl": {
+            "ca": DATABASE_CA_CERT
+        }
+    })
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 
 # Dependency
 def get_db():
