@@ -119,8 +119,8 @@ async def bus_stop(
     '''
 
     bus = add_or_update_bus(id, lat, longitude, time, db=db)
-    if bus:
-        return bus
+    if bus.id:
+        return {"Bus obj": bus}
 
     return {"Error" : "Unable to add or update bus "}
 
