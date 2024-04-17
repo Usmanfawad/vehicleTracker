@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.services.utils.lat_long_parser import extract_coordinates
 from app.routers.constants import *
 from app.db.session import get_db
-from app.services.controllers.bus import add_or_update_bus, get_all_buses
+from app.services.controllers.bus import add_or_update_bus, get_all_buses, delete_all_buses
 from app.routers.helpers import parse_distance_matrices
 
 
@@ -85,9 +85,9 @@ async def get_distance_all(db: Session = Depends(get_db)):
 
         async with httpx.AsyncClient() as client:
             response = await client.get(BASE_URL, params=params)
-            print(response.json())
+            # print(response.json())
         if response.json()["status"] != "REQUEST_DENIED":
-            print("Request not denied")
+            # print("Request not denied")
             data = response.json()
             distances.append(parse_distance_matrices(data))
         else:
@@ -123,3 +123,15 @@ async def bus_stop(
         return bus
 
     return {"Error" : "Unable to add or update bus "}
+
+
+@router.delete("/bus/all")
+def delete_bus_all(db: Session = Depends(get_db)):
+    '''
+    Endpoint to delete all bus objects from the Database
+    :return:
+    '''
+    delete_busses = delete_all_buses(db=db)
+    if delete_busses:
+        return {"200": "Success"}
+

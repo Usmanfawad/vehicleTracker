@@ -1,7 +1,9 @@
 {
-  "stopOne" : "https://www.google.com/maps/place/47%C2%B036'35.0%22N+7%C2%B039'32.4%22E/@47.6097222,7.659,19z/data=!3m1!4b1!4m4!3m3!8m2!3d47.6097222!4d7.659?entry=ttu",
-  "stopTwo" : "https://www.google.com/maps/place/47%C2%B036'50.6%22N+7%C2%B039'53.0%22E/@47.6140495,7.6636721,18z/data=!3m1!4b1!4m4!3m3!8m2!3d47.614048!4d7.664716?entry=tts",
-  "stopThree" : "https://www.google.com/maps/place/47%C2%B037'05.6%22N+7%C2%B039'35.9%22E/@47.6182219,7.6593173,19z/data=!3m1!4b1!4m4!3m3!8m2!3d47.618221!4d7.659961?entry=tts",
-  "stopFour" : "https://www.google.com/maps/place/47%C2%B037'56.0%22N+7%C2%B040'49.5%22E/@47.6322209,7.6792053,19z/data=!3m1!4b1!4m4!3m3!8m2!3d47.63222!4d7.680423?entry=tts",
-  "stopFive" : "https://www.google.com/maps/place/47%C2%B038'06.3%22N+7%C2%B040'47.2%22E/@47.6350889,7.6785513,19z/data=!3m1!4b1!4m4!3m3!8m2!3d47.635088!4d7.679769?entry=tts"
+  "Weinbrennerstraße 10/ Meeraner Platz" : "47.609644, 7.659042",
+  "Teichstraße" : "47.612838, 7.656555",
+  "Tumringer Str. 248" : "47.618336, 7.660004",
+  "Industriestraße 1/ Bauhaus" : "47.635074, 7.679989",
+  "Beim Haagensteg" : "47.632120, 7.680189",
+  "Schwarzwaldstraße" : "47.621237, 7.668989",
+  "Bahnhofstraße / Am Hebelaprk" : "47.612289, 7.663899"
 }

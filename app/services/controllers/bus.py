@@ -37,3 +37,10 @@ def get_all_buses(db: Session):
     for bus in buses:
         bus_dict[str(bus.bus_id)] = [bus.lat, bus.lon]
     return bus_dict
+
+
+def delete_all_buses(db: Session):
+    db.query(Bus).delete()
+    # Commit the transaction to make sure changes are applied
+    db.commit()
+    return True
