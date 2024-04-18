@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from prometheus_fastapi_instrumentator import Instrumentator
 from app.routers.routes import router as main_route
 from app.db.session import engine
 from app.db.base import Base
@@ -23,10 +23,13 @@ def get_application() -> FastAPI:
             "email": "ufawad0@gmail.com",
         }
     )
+
+    Instrumentator().instrument(application).expose(application)
     # Creating all database tables
     create_tables()
     ## Mapping api routes
     application.include_router(main_route, prefix="/app")
+
 
     ## Allow cors
     application.add_middleware(
