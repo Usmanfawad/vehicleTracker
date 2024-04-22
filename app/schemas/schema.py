@@ -1,5 +1,6 @@
 from fastapi import Query
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
+from typing import Dict
 
 
 class Location(BaseModel):
@@ -10,3 +11,13 @@ class Location(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ImageData(BaseModel):
+    images: Dict[str, str] = Query(
+        ...,
+        description='''
+            This should be a dictionary object with key as location name and value as it's URL
+        ''',
+        example="47.8807676"
+    )

@@ -1,0 +1,11 @@
+These files are available:
+- Am Hebelpark.jpeg
+- Bauhaus.jpeg
+- Beim Haagensteeg.jpeg
+- Meeranerplatz.jpeg
+- Schwarzwaldstrasse.jpeg
+- Teichstrasse.png
+- Tumringerstr.png
+
+Example:
+https://befriendspublicstorage.blob.core.windows.net/app-data/Am Hebelpark.jpeg
