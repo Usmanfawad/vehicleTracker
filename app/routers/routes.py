@@ -88,15 +88,12 @@ async def get_distance_all(db: Session = Depends(get_db)):
 
         async with httpx.AsyncClient() as client:
             response = await client.get(BASE_URL, params=params)
-            # print(response.json())
+
         if response.json()["status"] != "REQUEST_DENIED":
-            # print("Request not denied")
             data = response.json()
             distances.append(parse_distance_matrices(data))
         else:
             raise HTTPException(status_code=500, detail=response.json())
-        # Sort distances for this bus
-        # sorted_distances = sorted(distances[0], key=lambda x: x['in_m'])
 
         try:
             # Read the JSON file and return its content
@@ -106,8 +103,13 @@ async def get_distance_all(db: Session = Depends(get_db)):
         except FileNotFoundError:
             raise HTTPException(status_code=404, detail="File not found")
 
-        print(data)
-        return {"bus_id": bus_id, "distances": distances[0], "bus_images": data}
+
+        counter = 0
+        for each_obj in distances[0]:
+            each_obj["destination"]["img_url"] = list(data["images"].values())[counter]
+            counter += 1
+
+        return {"bus_id": bus_id, "distances": distances[0]}
 
     tasks = [fetch_distances(bus_id, bus_coords, stops) for bus_id, bus_coords in bus_objects.items()]
     api_responses_lst = await asyncio.gather(*tasks)
@@ -158,9 +160,7 @@ def custom_encoder(obj):
 
 @router.post("/upload-images/")
 async def upload_images(image_data: ImageData):
-    # Convert the incoming Pydantic model to a dictionary
     data_dict = image_data.dict()
-    # Write the dictionary to a JSON file
     with open("images.json", "w") as file:
         json.dump(data_dict, file, default=custom_encoder, indent=4)
     return {"message": "Data saved successfully"}
