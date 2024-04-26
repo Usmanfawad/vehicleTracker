@@ -109,6 +109,10 @@ async def get_distance_all(db: Session = Depends(get_db)):
             each_obj["destination"]["img_url"] = list(data["images"].values())[counter]
             counter += 1
 
+        counter = 0
+        for each_bus_name in distances[0]:
+            each_obj["destination"]["img_url"]
+
         return {"bus_id": bus_id, "distances": distances[0]}
 
     tasks = [fetch_distances(bus_id, bus_coords, stops) for bus_id, bus_coords in bus_objects.items()]
