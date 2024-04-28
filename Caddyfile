@@ -1,0 +1,18 @@
+{
+        auto_https off
+}
+
+:80 {
+
+    handle /metrics {
+        reverse_proxy 127.0.0.1:8000
+    }
+
+    handle /*    {
+            basicauth {
+                		befriends $2a$12$RjzkRxiOlwck8zormo/gaetyN1QX/TkjobM2HzIpRUsDKJwC0fcpa
+                	}
+        reverse_proxy 127.0.0.1:8000
+    }
+}
+

@@ -1,0 +1,47 @@
+name: Trigger auto deployment for vehicle-tracker
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ develop ]
+    paths:
+    - '**'
+    - '.github/workflows/vehicle-tracker-AutoDeployTrigger-091bbfe7-b3f9-4822-9dc3-ac3199082917.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.VEHICLETRACKER_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.VEHICLETRACKER_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.VEHICLETRACKER_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: befriendsvehicletracker.azurecr.io
+          registryUsername: ${{ secrets.VEHICLETRACKER_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.VEHICLETRACKER_REGISTRY_PASSWORD }}
+          containerAppName: vehicle-tracker
+          resourceGroup: Be-Friends-Prototype
+          imageToBuild: befriendsvehicletracker.azurecr.io/vehicle-tracker:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
