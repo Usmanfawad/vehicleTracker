@@ -107,6 +107,7 @@ async def get_distance_all(db: Session = Depends(get_db)):
         counter = 0
         for each_obj in distances[0]:
             each_obj["destination"]["img_url"] = list(data["images"].values())[counter]
+            each_obj["in_s"] += 60
             counter += 1
 
         counter = 0
