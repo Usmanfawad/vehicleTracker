@@ -9,3 +9,4 @@ class Bus(Base):
     lat = Column(Float)
     lon = Column(Float)
     time = Column(String)
+    last_stop_index = Column(Integer)

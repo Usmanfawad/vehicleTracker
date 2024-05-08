@@ -12,6 +12,9 @@ from app.services.controllers.bus import add_or_update_bus, get_all_buses, delet
 from app.routers.helpers import parse_distance_matrices
 from app.schemas.schema import ImageData
 
+from app.models.bus import Bus
+
+
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Depends, status, Query
@@ -26,6 +29,7 @@ router = APIRouter(
 )
 
 BUS_LOCATIONS_PARSED = None
+LAST_STOPS = {}
 
 
 @router.on_event("startup")
@@ -110,11 +114,18 @@ async def get_distance_all(db: Session = Depends(get_db)):
             each_obj["in_s"] += 60
             counter += 1
 
-        counter = 0
-        for each_bus_name in distances[0]:
-            each_obj["destination"]["img_url"]
 
-        return {"bus_id": bus_id, "distances": distances[0]}
+        bus = db.query(Bus).filter(Bus.bus_id == bus_id).first()
+        print(bus_id)
+        for i in range(len(distances[0])):
+            dist = distances[0][i]
+            if dist["in_m"] <= 200:
+                bus.last_stop_index = i
+                db.commit()
+                print("SHOULD UPDATE NOW")
+        last_bus_stop_index = bus.last_stop_index
+
+        return {"bus_id": bus_id, "distances": distances[0], "last_bus_stop_index": last_bus_stop_index}
 
     tasks = [fetch_distances(bus_id, bus_coords, stops) for bus_id, bus_coords in bus_objects.items()]
     api_responses_lst = await asyncio.gather(*tasks)
